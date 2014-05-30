@@ -15,13 +15,13 @@ set -e
 cd "$(dirname $0)/.."
 
 
-dropuser $dbuser || true
-sudo -u postgres createuser --no-superuser --createdb --no-createrole $dbuser
 dropdb $dbname || true
 createdb $dbname
+dropuser $dbuser || true
+sudo -u postgres createuser --no-superuser --createdb --no-createrole $dbuser
 
-echo "ALTER USER $dbuser WITH PASSWORD '$dbpassword'" | sudo -u postgres psql $dbname 
+echo "ALTER USER $dbuser WITH PASSWORD '$dbpassword'" | sudo -u postgres psql $dbname
 
-cat $src/???_*.sql $src/seed.sql | sudo -u postgres psql $dbname 
+cat $src/???_*.sql $src/seed.sql | sudo -u postgres psql $dbname
 
 echo "OK"
