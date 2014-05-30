@@ -20,8 +20,9 @@ createdb $dbname
 dropuser $dbuser || true
 sudo -u postgres createuser --no-superuser --createdb --no-createrole $dbuser
 
-echo "ALTER USER $dbuser WITH PASSWORD '$dbpassword'" | sudo -u postgres psql $dbname
 
+echo "ALTER USER $dbuser WITH PASSWORD '$dbpassword'" | sudo -u postgres psql $dbname
 cat $src/???_*.sql $src/seed.sql | sudo -u postgres psql $dbname
+echo "GRANT ALL PRIVILEGES ON TABLE products TO $dbuser " | sudo -u postgres psql $dbname
 
 echo "OK"
