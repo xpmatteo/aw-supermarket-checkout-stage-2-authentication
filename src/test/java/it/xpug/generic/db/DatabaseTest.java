@@ -16,11 +16,7 @@ public class DatabaseTest {
 
 	@Before
 	public void setUp() throws Exception {
-		Properties properties = new Properties();
-		properties.setProperty("user", "aw_supermarket_checkout");
-		properties.setProperty("host", "localhost");
-		properties.setProperty("database", "aw_supermarket_checkout_development");
-		configuration = new DatabaseConfiguration(properties);
+		configuration = new TestDatabaseConfiguration();
 		database = new Database(configuration);
 		database.execute("drop table if exists prova");
 		database.execute("create table prova( id serial, name varchar(255) );");

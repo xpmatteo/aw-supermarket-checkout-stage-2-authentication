@@ -55,7 +55,7 @@ public class Database {
 		}
 	}
 
-	public Object selectOneValue(String sql, String columnName) throws SQLException {
+	public Object selectOneValue(String sql, String columnName) {
 		ListOfRows rows = select(sql);
 		return rows.get(0).get(columnName);
 	}
