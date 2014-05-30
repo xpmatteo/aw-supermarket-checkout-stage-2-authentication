@@ -14,7 +14,7 @@ public class SupermarketServlet extends HttpServlet {
 	private SupermarketCheckout checkout;
 
 	public SupermarketServlet() {
-		PriceList priceList = new PropertyFilePriceList("price_list.properties");
+	//	PriceList priceList = new PropertyFilePriceList("price_list.properties");
 		Properties properties = getDatabaseProperties();
 		DatabaseConfiguration configuration = new DatabaseConfiguration(properties);
 		Database database = new Database(configuration);
