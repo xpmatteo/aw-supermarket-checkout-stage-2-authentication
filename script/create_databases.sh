@@ -1,9 +1,9 @@
 #!/bin/bash
 
 # define key information
-src=src/main/sql
-dbname=aw_supermarket_checkout_development
-dbuser=aw_supermarket_checkout
+src="src/main/sql"
+dbname="aw_supermarket_checkout_development"
+dbuser="aw_supermarket_checkout"
 dbpassword="secret"
 
 # no customization needed beyond this line

@@ -25,7 +25,7 @@ public class DatabaseConfiguration {
 		String host = properties.getProperty("host");
 		String database = properties.getProperty("database");
 		String url = format("jdbc:postgresql://%s/%s", host, database);
-		//Class.forName("org.postgresql.Driver");
+		Class.forName("org.postgresql.Driver");
 		Connection connection = DriverManager.getConnection(url);
 		connection.setAutoCommit(false);
 		return connection;

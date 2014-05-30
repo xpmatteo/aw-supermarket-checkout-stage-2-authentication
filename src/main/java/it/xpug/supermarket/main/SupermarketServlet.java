@@ -14,12 +14,11 @@ public class SupermarketServlet extends HttpServlet {
 	private SupermarketCheckout checkout;
 
 	public SupermarketServlet() {
-	//	PriceList priceList = new PropertyFilePriceList("price_list.properties");
 		Properties properties = getDatabaseProperties();
 		DatabaseConfiguration configuration = new DatabaseConfiguration(properties);
 		Database database = new Database(configuration);
-		PriceList other = new DatabasePriceList(database);
-		checkout = new SupermarketCheckout(other);
+		PriceList priceList = new DatabasePriceList(database);
+		checkout = new SupermarketCheckout(priceList);
 	}
 
 	@Override

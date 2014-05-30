@@ -12,7 +12,8 @@ public class DatabasePriceList implements PriceList {
 
 	@Override
 	public int findPrice(String code) {
-		ListOfRows rows = database.select("select price from products where code = ?", code);
+		String sql = "select price from products where code = ?";
+		ListOfRows rows = database.select(sql, code);
 		if (0 == rows.size())
 			throw new PriceNotFound();
 		return (Integer) rows.get(0).get("price");
