@@ -20,6 +20,6 @@ createdb $dbname
 dropuser --if-exists $dbuser
 createuser $dbuser
 
-cat $src/???_*.sql | psql $dbname $dbuser
+cat $src/???_*.sql $src/seed.sql | psql $dbname $dbuser
 
-echo "$dbname created"
+echo "OK"
