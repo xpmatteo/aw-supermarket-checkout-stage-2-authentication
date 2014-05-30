@@ -4,7 +4,7 @@
     <title>Supermarket Checkout</title>
   </head>
   <body>
-    <h1>Supermarket Checkout</h1>
+    <h1>This is the Supermarket Checkout</h1>
 
     <p id='display'>&nbsp;</p>
     <form id='scan'>
@@ -13,6 +13,32 @@
     </form>
 
     <script src='/scripts/lib/jquery-1.10.2.min.js'></script>
+    <script>
+      function on_scan_success(data) {
+        $("#display").text("Price: " + data.price);
+      }
+
+      function on_scan_error(data) {
+        $("#display").text(data.responseJSON.description || "Price Not Found");
+      }
+
+      function on_scan() {
+        $.ajax({
+          url: '/scan',
+          method: 'post',
+          success: on_scan_success,
+          error: on_scan_error,
+          data: {
+            code: $("#code").val()
+          },
+        });
+        return false;
+      }
+
+      $(document).ready(function() {
+        $("#scan").submit(on_scan);
+      });
+    </script>
   </body>
 </html>
 
