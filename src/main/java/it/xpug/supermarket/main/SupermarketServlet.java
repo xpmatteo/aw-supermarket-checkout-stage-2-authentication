@@ -10,15 +10,15 @@ import javax.servlet.http.*;
 
 public class SupermarketServlet extends HttpServlet {
 
-	private Database database;
+	private DatabaseConfiguration configuration;
 
 	public SupermarketServlet() {
-		DatabaseConfiguration configuration = new DatabaseConfiguration("database.properties");
-		database = new Database(configuration);
+		configuration = new DatabaseConfiguration("database.properties");
 	}
 
 	@Override
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		Database database = new Database(configuration);
 		SupermarketCheckoutRepository repository = new SupermarketCheckoutRepository(database);
 		SupermarketController controller = new SupermarketController(repository, request, response);
 		controller.service();
