@@ -3,7 +3,6 @@ package it.xpug.generic.db;
 import static org.junit.Assert.*;
 
 import java.sql.*;
-import java.util.*;
 
 import org.junit.*;
 
@@ -16,7 +15,7 @@ public class DatabaseTest {
 
 	@Before
 	public void setUp() throws Exception {
-		configuration = new TestDatabaseConfiguration();
+		configuration = new DatabaseConfiguration("database.properties");
 		database = new Database(configuration);
 		database.execute("drop table if exists prova");
 		database.execute("create table prova( id serial, name varchar(255) );");

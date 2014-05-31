@@ -2,6 +2,7 @@ package it.xpug.generic.db;
 
 import static java.lang.String.*;
 
+import java.io.*;
 import java.sql.*;
 import java.util.*;
 
@@ -9,8 +10,8 @@ public class DatabaseConfiguration {
 
 	private Properties properties;
 
-	public DatabaseConfiguration(Properties properties) {
-		this.properties = properties;
+	public DatabaseConfiguration(String fileName) {
+		this.properties = getProperties(fileName);
 	}
 
 	public Connection getConnection() {
@@ -26,10 +27,19 @@ public class DatabaseConfiguration {
 		String database = properties.getProperty("database");
 		String url = format("jdbc:postgresql://%s/%s", host, database);
 		Class.forName("org.postgresql.Driver");
-		System.out.println(properties.getProperty("user") + properties.getProperty("password"));
-		Connection connection = DriverManager.getConnection(url, properties.getProperty("user"), "secret");
+		Connection connection = DriverManager.getConnection(url, properties);
 		connection.setAutoCommit(false);
 		return connection;
+	}
+
+	private Properties getProperties(String fileName) {
+		Properties properties = new Properties();
+		try {
+			properties.load(new FileInputStream(fileName));
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+		return properties;
 	}
 
 }

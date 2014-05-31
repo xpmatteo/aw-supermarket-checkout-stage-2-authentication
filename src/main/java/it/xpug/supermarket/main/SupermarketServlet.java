@@ -4,7 +4,6 @@ package it.xpug.supermarket.main;
 import it.xpug.generic.db.*;
 
 import java.io.*;
-import java.util.*;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -15,8 +14,7 @@ public class SupermarketServlet extends HttpServlet {
 	private Database database;
 
 	public SupermarketServlet() {
-		Properties properties = getDatabaseProperties();
-		DatabaseConfiguration configuration = new DatabaseConfiguration(properties);
+		DatabaseConfiguration configuration = new DatabaseConfiguration("database.properties");
 		database = new Database(configuration);
 		priceList = new DatabasePriceList(database);
 	}
@@ -27,15 +25,5 @@ public class SupermarketServlet extends HttpServlet {
 		SupermarketCheckout checkout = repository.findById(0);
 		SupermarketController controller = new SupermarketController(checkout , request, response);
 		controller.service();
-	}
-
-	private Properties getDatabaseProperties() {
-		Properties properties = new Properties();
-		try {
-			properties.load(new FileInputStream("database.properties"));
-		} catch (Exception e) {
-			throw new RuntimeException(e);
-		}
-		return properties;
 	}
 }
