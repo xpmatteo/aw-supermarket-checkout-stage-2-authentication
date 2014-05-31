@@ -8,13 +8,13 @@ import javax.servlet.http.*;
 
 public class SupermarketController {
 
-	private SupermarketCheckout checkout;
 	private HttpServletRequest request;
 	private HttpServletResponse response;
+	private SupermarketCheckoutRepository repository;
 
-	public SupermarketController(SupermarketCheckout checkout,
+	public SupermarketController(SupermarketCheckoutRepository repository,
 			HttpServletRequest request, HttpServletResponse response) {
-		this.checkout = checkout;
+		this.repository = repository;
 		this.request = request;
 		this.response = response;
 	}
@@ -36,6 +36,7 @@ public class SupermarketController {
 	}
 
 	private void doTotal() throws IOException {
+		SupermarketCheckout checkout = repository.findById(0);
 		int total = checkout.total();
 		writeBody(toJson("total", total));
 	}
@@ -50,6 +51,7 @@ public class SupermarketController {
 
 	private void doScan() throws IOException {
 		try {
+			SupermarketCheckout checkout = repository.findById(0);
 			int price = checkout.scan(request.getParameter("code"));
 			writeBody(format("{ \"price\": %s }", price));
 		} catch (PriceNotFound e) {

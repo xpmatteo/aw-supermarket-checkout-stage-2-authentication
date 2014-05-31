@@ -20,8 +20,7 @@ public class SupermarketServlet extends HttpServlet {
 	@Override
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		SupermarketCheckoutRepository repository = new SupermarketCheckoutRepository(database);
-		SupermarketCheckout checkout = repository.findById(0);
-		SupermarketController controller = new SupermarketController(checkout , request, response);
+		SupermarketController controller = new SupermarketController(repository, request, response);
 		controller.service();
 	}
 }
