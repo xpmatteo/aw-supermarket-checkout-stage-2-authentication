@@ -11,19 +11,21 @@ import javax.servlet.http.*;
 
 public class SupermarketServlet extends HttpServlet {
 
-	private SupermarketCheckout checkout;
+	private PriceList priceList;
+	private Database database;
 
 	public SupermarketServlet() {
 		Properties properties = getDatabaseProperties();
 		DatabaseConfiguration configuration = new DatabaseConfiguration(properties);
-		Database database = new Database(configuration);
-		PriceList priceList = new DatabasePriceList(database);
-		checkout = new SupermarketCheckout(priceList);
+		database = new Database(configuration);
+		priceList = new DatabasePriceList(database);
 	}
 
 	@Override
 	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		SupermarketController controller = new SupermarketController(checkout, request, response);
+		SupermarketCheckoutRepository repository = new SupermarketCheckoutRepository(priceList, database);
+		SupermarketCheckout checkout = repository.findById(0);
+		SupermarketController controller = new SupermarketController(checkout , request, response);
 		controller.service();
 	}
 

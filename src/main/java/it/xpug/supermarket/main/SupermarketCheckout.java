@@ -19,4 +19,8 @@ public class SupermarketCheckout {
 		return total;
 	}
 
+	public void setTotal(int newTotal) {
+		this.total = newTotal;
+	}
+
 }
