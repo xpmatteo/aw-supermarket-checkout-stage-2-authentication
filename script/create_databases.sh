@@ -25,14 +25,17 @@ if uname -a | grep -qi ubuntu; then
 fi
 
 
+# create database and user
 dropdb $dbname || true
 createdb $dbname
 dropuser $dbuser || true
 createuser --no-superuser --createdb --no-createrole $dbuser
-
-
 echo "ALTER USER $dbuser WITH PASSWORD '$dbpassword'" | psql $dbname
+
+# load all sql scripts in database
 cat $src/???_*.sql $src/seed.sql | psql $dbname
+
+# grant all privileges on all tables to our user
 echo "GRANT ALL PRIVILEGES ON TABLE products TO $dbuser " | psql $dbname
 
 echo "OK"
