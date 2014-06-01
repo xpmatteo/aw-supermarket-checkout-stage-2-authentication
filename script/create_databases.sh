@@ -1,4 +1,7 @@
 #!/bin/bash
+#
+# Purpose: create all needed databases for the application,
+# loading the schema and the test data
 
 # define key information
 src=src/main/sql

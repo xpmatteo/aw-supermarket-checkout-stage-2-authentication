@@ -1,3 +1,9 @@
+#!/bin/bash
+#
+# Purpose: run the application
+#
+# Before you call this script, you should run 'mvn clean package'
+#
 
 set -e
 cd "$(dirname $0)/.."
