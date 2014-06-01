@@ -15,14 +15,24 @@ set -e
 cd "$(dirname $0)/.."
 
 
+# if we're on Ubuntu
+if uname -a | grep -qi ubuntu; then
+  # if the postgres user for the current login does not exist
+  if ! psql -tAc "select 3 + 4" template1 > /dev/null 2> /dev/null; then
+    # then create the postgres user with superuser privileges
+    sudo -u postgres createuser --superuser $(whoami) 
+  fi
+fi
+
+
 dropdb $dbname || true
 createdb $dbname
 dropuser $dbuser || true
-sudo -u postgres createuser --no-superuser --createdb --no-createrole $dbuser
+createuser --no-superuser --createdb --no-createrole $dbuser
 
 
-echo "ALTER USER $dbuser WITH PASSWORD '$dbpassword'" | sudo -u postgres psql $dbname
-cat $src/???_*.sql $src/seed.sql | sudo -u postgres psql $dbname
-echo "GRANT ALL PRIVILEGES ON TABLE products TO $dbuser " | sudo -u postgres psql $dbname
+echo "ALTER USER $dbuser WITH PASSWORD '$dbpassword'" | psql $dbname
+cat $src/???_*.sql $src/seed.sql | psql $dbname
+echo "GRANT ALL PRIVILEGES ON TABLE products TO $dbuser " | psql $dbname
 
 echo "OK"
