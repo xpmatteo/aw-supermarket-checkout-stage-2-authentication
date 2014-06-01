@@ -15,6 +15,16 @@ set -e
 cd "$(dirname $0)/.."
 
 
+# if we're on Ubuntu
+if uname -a | grep -qi ubuntu; then
+  # if the postgres user for the current login does not exist
+  if ! psql -tAc "select 3 + 4" template1 > /dev/null 2> /dev/null; then
+    # then create the postgres user with superuser privileges
+    sudo -u postgres createuser --superuser $(whoami) 
+  fi
+fi
+
+
 dropdb $dbname || true
 createdb $dbname
 dropuser $dbuser || true
