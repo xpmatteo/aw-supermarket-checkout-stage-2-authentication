@@ -30,9 +30,16 @@ public class SupermarketController {
 		}
 	}
 
-	private void do404() throws IOException {
-		response.setStatus(404);
-		writeBody(toJson("description", "Not Found"));
+	private void doScan() throws IOException {
+		try {
+			SupermarketCheckout checkout = repository.findById(0);
+			int price = checkout.scan(request.getParameter("code"));
+			repository.save(checkout);
+			writeBody(format("{ \"price\": %s }", price));
+		} catch (PriceNotFound e) {
+			response.setStatus(400);
+			writeBody("{ \"description\": \"Price not found\" }");
+		}
 	}
 
 	private void doTotal() throws IOException {
@@ -41,23 +48,17 @@ public class SupermarketController {
 		writeBody(toJson("total", total));
 	}
 
+	private void do404() throws IOException {
+		response.setStatus(404);
+		writeBody(toJson("description", "Not Found"));
+	}
+
 	private String toJson(String name, String value) {
 		return format("{ \"%s\": \"%s\" }", name, value);
 	}
 
 	private String toJson(String name, int value) {
 		return format("{ \"%s\": %s }", name, value);
-	}
-
-	private void doScan() throws IOException {
-		try {
-			SupermarketCheckout checkout = repository.findById(0);
-			int price = checkout.scan(request.getParameter("code"));
-			writeBody(format("{ \"price\": %s }", price));
-		} catch (PriceNotFound e) {
-			response.setStatus(400);
-			writeBody("{ \"description\": \"Price not found\" }");
-		}
 	}
 
 	private void writeBody(String body) throws IOException {

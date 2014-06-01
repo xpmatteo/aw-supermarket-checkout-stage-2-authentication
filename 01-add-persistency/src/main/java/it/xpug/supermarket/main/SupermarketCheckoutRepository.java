@@ -17,4 +17,8 @@ public class SupermarketCheckoutRepository {
 		checkout.setTotal(1234);
 		return checkout;
 	}
+
+	public void save(SupermarketCheckout checkout) {
+		// do something with the database ...
+	}
 }
