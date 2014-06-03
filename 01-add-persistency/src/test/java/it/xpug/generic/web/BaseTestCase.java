@@ -1,4 +1,4 @@
-package it.xpug.example.main;
+package it.xpug.generic.web;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
