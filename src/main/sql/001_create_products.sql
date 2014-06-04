@@ -4,3 +4,6 @@ create table products (
   price integer not null,
   primary key(code)
 );
+
+update schema_info set version = 1;
+
