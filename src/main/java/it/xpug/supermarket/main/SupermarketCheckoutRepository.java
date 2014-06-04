@@ -12,13 +12,16 @@ public class SupermarketCheckoutRepository {
 
 	public SupermarketCheckout findById(int supermarketCheckoutId) {
 		PriceList priceList = new DatabasePriceList(database);
-		SupermarketCheckout checkout = new SupermarketCheckout(priceList);
-		// do something with the database ...
-		checkout.setTotal(1234);
+		SupermarketCheckout checkout = new SupermarketCheckout(supermarketCheckoutId, priceList);
+		String sql = "select * from checkouts where id = ?";
+		ListOfRows rows = database.select(sql, supermarketCheckoutId);
+		if (0 == rows.size()) throw new CheckoutNotFound();
+		checkout.setTotal((Integer) rows.get(0).get("total"));
 		return checkout;
 	}
 
 	public void save(SupermarketCheckout checkout) {
-		// do something with the database ...
+		String sql = "update checkouts set total = ? where id = ?";
+		database.execute(sql, checkout.total(), checkout.id());
 	}
 }

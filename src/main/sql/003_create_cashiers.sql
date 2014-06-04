@@ -5,5 +5,5 @@ create table cashiers (
   primary key(id)
 );
 
-update schema_info set version = 2;
+update schema_info set version = 3;
 

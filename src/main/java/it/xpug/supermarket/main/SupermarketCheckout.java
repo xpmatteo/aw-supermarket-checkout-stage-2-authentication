@@ -4,8 +4,10 @@ public class SupermarketCheckout {
 
 	private int total;
 	private PriceList priceList;
+	private int id;
 
-	public SupermarketCheckout(PriceList priceList) {
+	public SupermarketCheckout(Integer id, PriceList priceList) {
+		this.id = id;
 		this.priceList = priceList;
 	}
 
@@ -21,6 +23,10 @@ public class SupermarketCheckout {
 
 	public void setTotal(int newTotal) {
 		this.total = newTotal;
+	}
+
+	public int id() {
+		return id;
 	}
 
 }
