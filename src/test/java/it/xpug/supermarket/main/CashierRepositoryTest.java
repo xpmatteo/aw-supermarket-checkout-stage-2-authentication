@@ -12,32 +12,33 @@ public class CashierRepositoryTest {
 
 	@Before
 	public void setUp() throws Exception {
-		database.execute("delete from cashiers");
+		database.execute("delete from cashiers where id >= 1000000");
 	}
 
 	@Test
-	public void initiallyEmpty() throws Exception {
-		assertEquals(0, repository.count());
+	public void findsBasicUser() throws Exception {
+		assertTrue("cassiere 123", repository.cashierExists(new Cashier(123, "secret")));
 	}
 
 	@Test
 	public void createUser() {
-		repository.add(new Cashier(1, "x"));
-		assertEquals(1, repository.count());
+		long before = repository.count();
+		repository.add(new Cashier(1000*1000, "x"));
+		assertEquals(before + 1, repository.count());
 	}
 
 	@Test
 	public void authenticationSucceeds() {
-		Cashier cashier = new Cashier(1234, "password");
+		Cashier cashier = new Cashier(1000*1000, "password");
 		repository.add(cashier);
 		assertTrue(repository.cashierExists(cashier));
 	}
 
 	@Test
 	public void authenticationFails() throws Exception {
-		repository.add(new Cashier(1234, "password"));
+		repository.add(new Cashier(1000*1000, "password"));
 		assertFalse("bad id", repository.cashierExists(new Cashier(999, "password")));
-		assertFalse("bad password", repository.cashierExists(new Cashier(1234, "wrong")));
+		assertFalse("bad password", repository.cashierExists(new Cashier(1000*1000, "wrong")));
 	}
 
 }
