@@ -6,18 +6,25 @@ import it.xpug.generic.db.*;
 import org.junit.*;
 
 public class CashierRepositoryTest {
-	CashierRepository repository = new CashierRepository(new Database(new DatabaseConfiguration("database.properties")));
+	private Database database = new Database(new DatabaseConfiguration("database.properties"));
+	CashierRepository repository = new CashierRepository(database);
+
+
+	@Before
+	public void setUp() throws Exception {
+		database.execute("delete from cashiers");
+	}
 
 	@Test
 	public void initiallyEmpty() throws Exception {
 		assertEquals(0, repository.count());
 	}
 
-//	@Test
-//	public void createUser() {
-//		repository.add(new Cashier(1, "x"));
-//		assertEquals(1, repository.count());
-//	}
+	@Test
+	public void createUser() {
+		repository.add(new Cashier(1, "x"));
+		assertEquals(1, repository.count());
+	}
 
 	@Test
 	public void authenticationSucceeds() {

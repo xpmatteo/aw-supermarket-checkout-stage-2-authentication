@@ -4,7 +4,6 @@ import it.xpug.generic.db.*;
 
 public class CashierRepository {
 
-	private Cashier cashier;
 	private Database database;
 
 	public CashierRepository(Database database) {
@@ -12,11 +11,14 @@ public class CashierRepository {
 	}
 
 	public void add(Cashier cashier) {
-		this.cashier = cashier;
+		String sql = "insert into cashiers (id, encrypted_password) values (?, ?)";
+		database.execute(sql, cashier.cashierId(), cashier.password());
 	}
 
 	public boolean cashierExists(int cashierId, String password) {
-		return cashier != null && cashier.cashierId() == cashierId && cashier.password().equals(password);
+		String sql = "select * from cashiers where id = ? and encrypted_password = ?";
+		ListOfRows rows = database.select(sql, cashierId, password);
+		return rows.size() != 0;
 	}
 
 	public long count() {
