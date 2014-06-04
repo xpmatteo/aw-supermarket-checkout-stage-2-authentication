@@ -12,8 +12,8 @@ public class SupermarketCheckoutRepositoryTest {
 
 	@Test
 	public void findsCheckouts() throws Exception {
-		assertEquals("id 0", 0, repository.findById(0).total());
-		assertEquals("id 1", 100, repository.findById(1).total());
+		assertEquals("id 0", 0, repository.findById(0).id());
+		assertEquals("id 1", 1, repository.findById(1).id());
 	}
 
 	@Test(expected=SupermarketCheckoutRepository.CheckoutNotFound.class)
@@ -24,13 +24,13 @@ public class SupermarketCheckoutRepositoryTest {
 	@Test
 	public void save() throws Exception {
 		SupermarketCheckout checkout = repository.findById(0);
+		int totalBefore = checkout.total();
 		checkout.scan("A");
-		assertEquals(111, checkout.total());
 
 		repository.save(checkout);
 
 		SupermarketCheckout reloaded = repository.findById(0);
-		assertEquals(111, reloaded.total());
+		assertEquals(totalBefore + 111, reloaded.total());
 	}
 
 }
