@@ -14,7 +14,7 @@ public class DatabasePriceListTest {
 		assertEquals(111, priceList.findPrice("A"));
 	}
 
-	@Test(expected=PriceNotFound.class)
+	@Test(expected=PriceList.PriceNotFound.class)
 	public void reportsPriceNotFound() throws Exception {
 		priceList.findPrice("XXX");
 	}

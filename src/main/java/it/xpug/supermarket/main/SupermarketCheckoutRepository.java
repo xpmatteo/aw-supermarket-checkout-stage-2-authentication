@@ -24,4 +24,8 @@ public class SupermarketCheckoutRepository {
 		String sql = "update checkouts set total = ? where id = ?";
 		database.execute(sql, checkout.total(), checkout.id());
 	}
+
+	public static class CheckoutNotFound extends RuntimeException {
+	}
+
 }

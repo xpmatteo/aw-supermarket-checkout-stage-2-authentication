@@ -16,7 +16,7 @@ public class SupermarketCheckoutRepositoryTest {
 		assertEquals("id 1", 100, repository.findById(1).total());
 	}
 
-	@Test(expected=CheckoutNotFound.class)
+	@Test(expected=SupermarketCheckoutRepository.CheckoutNotFound.class)
 	public void checkoutNotFound() throws Exception {
 		repository.findById(99);
 	}

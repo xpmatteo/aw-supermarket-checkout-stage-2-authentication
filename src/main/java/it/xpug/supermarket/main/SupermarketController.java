@@ -36,7 +36,7 @@ public class SupermarketController {
 			int price = checkout.scan(request.getParameter("code"));
 			repository.save(checkout);
 			writeBody(format("{ \"price\": %s }", price));
-		} catch (PriceNotFound e) {
+		} catch (PriceList.PriceNotFound e) {
 			response.setStatus(400);
 			writeBody("{ \"description\": \"Price not found\" }");
 		}
