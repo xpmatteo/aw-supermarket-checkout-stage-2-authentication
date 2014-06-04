@@ -12,12 +12,12 @@ public class CashierRepository {
 
 	public void add(Cashier cashier) {
 		String sql = "insert into cashiers (id, encrypted_password) values (?, ?)";
-		database.execute(sql, cashier.cashierId(), cashier.password());
+		database.execute(sql, cashier.cashierId(), cashier.encryptedPassword());
 	}
 
-	public boolean cashierExists(int cashierId, String password) {
+	public boolean cashierExists(Cashier cashier) {
 		String sql = "select * from cashiers where id = ? and encrypted_password = ?";
-		ListOfRows rows = database.select(sql, cashierId, password);
+		ListOfRows rows = database.select(sql, cashier.cashierId(), cashier.encryptedPassword());
 		return rows.size() != 0;
 	}
 

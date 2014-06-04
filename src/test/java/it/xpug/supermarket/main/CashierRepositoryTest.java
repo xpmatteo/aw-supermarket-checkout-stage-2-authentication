@@ -28,15 +28,16 @@ public class CashierRepositoryTest {
 
 	@Test
 	public void authenticationSucceeds() {
-		repository.add(new Cashier(1234, "password"));
-		assertTrue(repository.cashierExists(1234, "password"));
+		Cashier cashier = new Cashier(1234, "password");
+		repository.add(cashier);
+		assertTrue(repository.cashierExists(cashier));
 	}
 
 	@Test
 	public void authenticationFails() throws Exception {
 		repository.add(new Cashier(1234, "password"));
-		assertFalse("bad id", repository.cashierExists(8888, "password"));
-		assertFalse("bad password", repository.cashierExists(1234, "anything"));
+		assertFalse("bad id", repository.cashierExists(new Cashier(999, "password")));
+		assertFalse("bad password", repository.cashierExists(new Cashier(1234, "wrong")));
 	}
 
 }
