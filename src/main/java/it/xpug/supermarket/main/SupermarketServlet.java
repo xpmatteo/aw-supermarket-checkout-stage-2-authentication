@@ -12,8 +12,8 @@ public class SupermarketServlet extends HttpServlet {
 
 	private DatabaseConfiguration configuration;
 
-	public SupermarketServlet() {
-		configuration = new DatabaseConfiguration("database.properties");
+	public SupermarketServlet(DatabaseConfiguration configuration) {
+		this.configuration = configuration;
 	}
 
 	@Override

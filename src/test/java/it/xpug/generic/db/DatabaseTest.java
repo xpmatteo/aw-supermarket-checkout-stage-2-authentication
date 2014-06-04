@@ -10,12 +10,12 @@ import org.junit.*;
 public class DatabaseTest {
 
 
-	private DatabaseConfiguration configuration;
+	private PropertyFileDatabaseConfiguration configuration;
 	private Database database;
 
 	@Before
 	public void setUp() throws Exception {
-		configuration = new DatabaseConfiguration("database.properties");
+		configuration = new PropertyFileDatabaseConfiguration("database.properties");
 		database = new Database(configuration);
 		database.execute("drop table if exists prova");
 		database.execute("create table prova( id serial, name varchar(255) );");

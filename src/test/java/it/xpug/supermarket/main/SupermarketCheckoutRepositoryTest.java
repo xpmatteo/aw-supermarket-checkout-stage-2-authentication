@@ -7,7 +7,7 @@ import org.junit.*;
 
 public class SupermarketCheckoutRepositoryTest {
 
-	private Database database = new Database(new DatabaseConfiguration("database.properties"));
+	private Database database = new Database(new PropertyFileDatabaseConfiguration("database.properties"));
 	SupermarketCheckoutRepository repository = new SupermarketCheckoutRepository(database);
 
 	@Test

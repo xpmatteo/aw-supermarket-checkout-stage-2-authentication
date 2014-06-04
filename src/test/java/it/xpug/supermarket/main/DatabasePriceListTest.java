@@ -6,7 +6,7 @@ import it.xpug.generic.db.*;
 import org.junit.*;
 
 public class DatabasePriceListTest {
-	Database database = new Database(new DatabaseConfiguration("database.properties"));
+	Database database = new Database(new PropertyFileDatabaseConfiguration("database.properties"));
 	PriceList priceList = new DatabasePriceList(database);
 
 	@Test

@@ -6,7 +6,7 @@ import it.xpug.generic.db.*;
 import org.junit.*;
 
 public class CashierRepositoryTest {
-	private Database database = new Database(new DatabaseConfiguration("database.properties"));
+	private Database database = new Database(new PropertyFileDatabaseConfiguration("database.properties"));
 	CashierRepository repository = new CashierRepository(database);
 
 

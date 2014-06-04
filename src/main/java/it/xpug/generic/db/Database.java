@@ -1,5 +1,7 @@
 package it.xpug.generic.db;
 
+import it.xpug.supermarket.main.*;
+
 import java.sql.*;
 
 public class Database {

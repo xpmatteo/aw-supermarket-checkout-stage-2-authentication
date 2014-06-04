@@ -1,16 +1,17 @@
 package it.xpug.generic.db;
 
 import static java.lang.String.*;
+import it.xpug.supermarket.main.*;
 
 import java.io.*;
 import java.sql.*;
 import java.util.*;
 
-public class DatabaseConfiguration {
+public class PropertyFileDatabaseConfiguration implements DatabaseConfiguration {
 
 	private Properties properties;
 
-	public DatabaseConfiguration(String fileName) {
+	public PropertyFileDatabaseConfiguration(String fileName) {
 		this.properties = getProperties(fileName);
 	}
 

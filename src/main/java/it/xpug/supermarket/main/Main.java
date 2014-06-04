@@ -2,6 +2,7 @@ package it.xpug.supermarket.main;
 
 
 import static java.lang.Integer.*;
+import it.xpug.generic.db.*;
 import it.xpug.generic.web.*;
 
 
@@ -12,7 +13,13 @@ public class Main {
 			port = "8080";
 		}
 
-		ReusableJettyApp app = new ReusableJettyApp(new SupermarketServlet());
+		DatabaseConfiguration configuration;
+		if (System.getenv("DATABASE_URL") != null)
+			configuration = new HerokuDatabaseConfiguration();
+		else
+			configuration = new PropertyFileDatabaseConfiguration("database.properties");
+
+		ReusableJettyApp app = new ReusableJettyApp(new SupermarketServlet(configuration));
 		app.start(valueOf(port), "src/main/webapp");
 	}
 }
