@@ -16,7 +16,7 @@ public class Database {
 		PreparedStatement statement = null;
 		Connection connection = null;
 		try {
-			connection = configuration.getConnection();
+			connection = getConnection();
 			statement = connection.prepareStatement(sql);
 			setParams(statement, params);
 			statement.execute();
@@ -29,12 +29,18 @@ public class Database {
 		}
 	}
 
+	private Connection getConnection() throws SQLException {
+		Connection connection = configuration.getConnection();
+		connection.setAutoCommit(false);
+		return connection;
+	}
+
 	public ListOfRows select(String sql, Object... params) {
 		PreparedStatement statement = null;
 		ResultSet resultSet = null;
 		Connection connection = null;
 		try {
-			connection = configuration.getConnection();
+			connection = getConnection();
 			statement = connection.prepareStatement(sql);
 			setParams(statement, params);
 			resultSet = statement.executeQuery();
