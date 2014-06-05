@@ -9,8 +9,23 @@
 #
 #    cat MYFILE.sql | script/production_dbconsole.sh
 #
+# Prerequisites: you will need to install the Heroku tool
 
+# stop at the first error
+set -e
+
+# change directory to the root of this project
 cd "$(dirname "$0")/.."
 
-psql $* $(heroku pg:credentials DATABASE | grep ://)
+# see if the heroku command is installed
+hash heroku || {
+  echo "Please install the 'heroku' tool.  See heroku.com for instructions"
+  exit 1
+}
+
+# obtain the credentials
+dburl=$(heroku pg:credentials DATABASE | grep ://)
+
+# connect to postgres on heroku
+psql $* $dburl
 
